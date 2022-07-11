@@ -2,8 +2,8 @@
 
 #SBATCH --account=pi-lhansen
 #SBATCH --job-name=pf_mus
-#SBATCH --output=pf_mus.out
-#SBATCH --error=pf_mus.err
+#SBATCH --output=pf_mus.%A_%a.out
+#SBATCH --error=pf_mus.%A_%a.err
 #SBATCH --time=0-8:00:00
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=28
