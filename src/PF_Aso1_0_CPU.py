@@ -85,7 +85,7 @@ def update_θ(H):
 
         J_inv = np.array([[1.0,                0.0,        0.0],\
                           [-β_s2[1,0],         1.0,        0.0],\
-                          [-β_s3[1,0], -β_s3[2,0],         1.0]])
+                          [-β_s3[1,0],  -β_s3[2,0],        1.0]])
         Aso = sp.linalg.solve(J_inv, np.array([[0], β_s2[0], β_s3[0]]))
         Ass = sp.linalg.solve(J_inv, np.array([[β_s1[0,0], β_s1[1,0], β_s1[2,0]],\
                                                [β_s2[2,0], β_s2[3,0], β_s2[4,0]],\
@@ -102,16 +102,6 @@ def update_θ(H):
     θ = [Azo, Azz, Bz, Aso, Ass, Bs, J_inv, λ_iter, Ass_iter]
     
     return θ
-
-def init_H(Λ_scale, cd_scale):
-        
-    H0 = [[np.array([[1.0], [1.0]]), np.eye(2) * Λ_scale, 1 * cd_scale, 1 * cd_scale],\
-          [np.array([[0.0], [0.0]]), np.eye(2) * Λ_scale, 1 * cd_scale, 1 * cd_scale],\
-          [np.array([[0.0], [0.0], [0.0]]), np.eye(3) * Λ_scale, 1 * cd_scale, 1 * cd_scale],\
-          [np.array([[0.0], [0.0], [0.0], [0.0], [0.0]]), np.eye(5) * Λ_scale, 1 * cd_scale, 1 * cd_scale],\
-          [np.array([[0.0], [0.0], [0.0], [0.0], [0.0], [0.0]]), np.eye(6) * Λ_scale, 1 * cd_scale, 1 * cd_scale]]
-    
-    return H0
 
 def init_X(θ, D_0):
     
@@ -157,9 +147,14 @@ def init_X(θ, D_0):
 
 
 def init(Input):
-    D0, Λ_scale, cd_scale, seed = Input
+    D0, seed = Input
     np.random.seed(seed)
-    H0 = init_H(Λ_scale, cd_scale)
+    H0 = [[np.array([[1.0], [1.0]]), np.eye(2), 1, 1],\
+          [np.array([[0.0], [0.0]]), np.eye(2), 1, 1],\
+          [np.array([[0.0], [0.0], [0.0]]), np.eye(3), 1, 1],\
+          [np.array([[0.0], [0.0], [0.0], [0.0], [0.0]]), np.eye(5), 1, 1],\
+          [np.array([[0.0], [0.0], [0.0], [0.0], [0.0], [0.0]]), np.eye(6), 1, 1]]
+    
     Σ0_postive = False
     while Σ0_postive == False:
         θ0 = update_θ(H0)

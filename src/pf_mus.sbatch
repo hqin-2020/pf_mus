@@ -4,11 +4,11 @@
 #SBATCH --job-name=pf_mus
 #SBATCH --output=pf_mus.%A_%a.out
 #SBATCH --error=pf_mus.%A_%a.err
-#SBATCH --time=0-3:00:00
+#SBATCH --time=0-1:00:00
 #SBATCH --partition=standard
-#SBATCH --cpus-per-task=28
+#SBATCH --cpus-per-task=64
 #SBATCH --mem=32G
-#SBATCH --array=1-150
+#SBATCH --array=1-1500
 
 # Load Python modules
 module load python/booth/3.8/3.8.5
