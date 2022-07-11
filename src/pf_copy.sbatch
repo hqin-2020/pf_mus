@@ -5,9 +5,9 @@
 #SBATCH --output=pf_copy.out
 #SBATCH --error=pf_copy.err
 #SBATCH --time=1-23:00:00
-#SBATCH --partition=standard
+#SBATCH --partition=highmem
 #SBATCH --cpus-per-task=8
-#SBATCH --mem=32G
+#SBATCH --mem=120G
 
 # Load Python modules
 module load python/booth/3.8/3.8.5
