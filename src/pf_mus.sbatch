@@ -8,7 +8,7 @@
 #SBATCH --partition=standard
 #SBATCH --cpus-per-task=64
 #SBATCH --mem=32G
-#SBATCH --array=1-1500
+#SBATCH --array=1-200
 
 # Load Python modules
 module load python/booth/3.8/3.8.5
