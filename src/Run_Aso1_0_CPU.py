@@ -18,7 +18,7 @@ if __name__ == '__main__':
     datadir = workdir + '/data/'
     outputdir = '/scratch/qhaomin/pf_mus/'
 
-    seed = 0
+    seed = 6
 
     obs_series = pd.read_csv(datadir + 'data.csv', delimiter=',')
     obs_series = np.array(obs_series.iloc[:,1:]).T
