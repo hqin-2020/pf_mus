@@ -3,7 +3,7 @@ import os
 from tqdm import tqdm
 
 workdir = os.path.dirname(os.getcwd())
-source_dir = '/scratch/qhaomin/pf_ms/'
+source_dir = '/scratch/qhaomin/pf_mus/'
 destination_dir = workdir + '/output/'
 
 N = 100_000
