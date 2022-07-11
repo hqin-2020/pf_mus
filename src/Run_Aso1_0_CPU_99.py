@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     D_0 = obs_series[:,[0]]
 
-    Input_0 = [[D_0, seed*10**8+i] for i in range(N)]
+    Input_0 = [[D_0, seed+i] for i in range(N)]
     pool = multiprocessing.Pool()
     Output_0 = pool.map(init, tqdm(Input_0))
     del(Input_0)
@@ -64,7 +64,7 @@ if __name__ == '__main__':
         
         D_t_next = obs_series[:,[t+1]]
         
-        Input = [[D_t_next, X_t_particle[i], H_t_particle[i], seed*10**8+t*10**7+i] for i in range(N)]
+        Input = [[D_t_next, X_t_particle[i], H_t_particle[i], seed+t+i] for i in range(N)]
         del(D_t_next)
         del(X_t_particle)
         del(H_t_particle)
