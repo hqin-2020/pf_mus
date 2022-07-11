@@ -8,6 +8,8 @@ from tqdm import tqdm
 import multiprocessing
 import pickle
 import os
+import psutil
+import gc
 
 from PF_Aso1_0_CPU import *
 
@@ -25,8 +27,10 @@ if __name__ == '__main__':
 
     T = obs_series.shape[1]
     N = 100_000
+    Λ_scale = 1.0
+    cd_scale = 1.0
 
-    case = 'actual data, seed = ' + str(seed) + ', T = ' + str(T) + ', N = ' + str(N)
+    case = 'actual data, seed = ' + str(seed) + ', T = ' + str(T) + ', N = ' + str(N) + ', Λ_scale = ' + str(Λ_scale) + ', cd_scale = ' + str(cd_scale)
     try: 
         casedir = outputdir + case  + '/'
         os.mkdir(casedir)
@@ -38,17 +42,22 @@ if __name__ == '__main__':
 
     D_0 = obs_series[:,[0]]
 
-    Input_0 = [[D_0, seed+i] for i in range(N)]
+    Input_0 = [[D_0, Λ_scale, cd_scale, seed+i] for i in range(N)]
     pool = multiprocessing.Pool()
     Output_0 = pool.map(init, tqdm(Input_0))
     del(Input_0)
+    gc.collect()
+    print('1', psutil.Process().memory_full_info().rss/(1024*1024*1024))
     θ_t_particle = [i[0] for i in Output_0]
     X_t_particle = [i[1] for i in Output_0]
     H_t_particle = [i[2] for i in Output_0]
     del(Output_0)
+    gc.collect()
+    print('2', psutil.Process().memory_full_info().rss/(1024*1024*1024))
     with open(casedir + 'θ_0.pkl', 'wb') as f:
         pickle.dump(θ_t_particle, f)
     del(θ_t_particle)
+    gc.collect()
     # with open(casedir + 'X_0.pkl', 'wb') as f:
     #     pickle.dump(X_t_particle, f)
     # with open(casedir + 'H_0.pkl', 'wb') as f:
@@ -66,21 +75,29 @@ if __name__ == '__main__':
         
         Input = [[D_t_next, X_t_particle[i], H_t_particle[i], seed+t+i] for i in range(N)]
         del(D_t_next)
+        gc.collect()
         del(X_t_particle)
+        gc.collect()
         del(H_t_particle)
+        gc.collect()
+        print('3', psutil.Process().memory_full_info().rss/(1024*1024*1024))
         pool = multiprocessing.Pool()
         Output = pool.map(recursive, Input)
         del(Input)
+        gc.collect()
+        print('4', psutil.Process().memory_full_info().rss/(1024*1024*1024))
 
         θ_t_next_particle = [i[0] for i in Output]
         X_t_next_particle = [i[1] for i in Output]
         H_t_next_particle = [i[2] for i in Output]
         ν_t_next_particle = [i[3] for i in Output]    
         del(Output)
+        gc.collect()
 
         with open(casedir + 'θ_' + str(t+1) + '.pkl', 'wb') as f:
             pickle.dump(θ_t_next_particle, f)
         del(θ_t_next_particle)
+        gc.collect()
         # with open(casedir + 'X_' + str(t+1) + '.pkl', 'wb') as f:
         #     pickle.dump(X_t_next_particle, f)
         # with open(casedir + 'H_' + str(t+1) + '.pkl', 'wb') as f:
@@ -88,6 +105,7 @@ if __name__ == '__main__':
 
         w_t_next = ν_t_next_particle/np.sum(ν_t_next_particle)
         del(ν_t_next_particle)
+        gc.collect()
 
         try:
             count_all = sp.stats.multinomial.rvs(N, w_t_next)
@@ -101,6 +119,7 @@ if __name__ == '__main__':
         with open(casedir + 'w_' + str(t+1) + '.pkl', 'wb') as f:
             pickle.dump(w_t_next, f)
         del(w_t_next)
+        gc.collect()
         with open(casedir + 'count_' + str(t+1) + '.pkl', 'wb') as f:
             pickle.dump(count_all, f)
         
@@ -112,7 +131,12 @@ if __name__ == '__main__':
                 for n in range(count_all[i]):
                     X_t_particle.append(X_t_next_particle[i])
                     H_t_particle.append(H_t_next_particle[i])
-        del(count_all)        
+        print('5', psutil.Process().memory_full_info().rss/(1024*1024*1024))
+        del(count_all)    
+        gc.collect()        
         del(X_t_next_particle)
+        gc.collect()
         del(H_t_next_particle)
+        gc.collect()
+        print('6', psutil.Process().memory_full_info().rss/(1024*1024*1024))
         
