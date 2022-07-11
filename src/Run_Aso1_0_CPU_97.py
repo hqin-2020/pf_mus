@@ -30,7 +30,7 @@ if __name__ == '__main__':
     Λ_scale = 1.0
     cd_scale = 1.0
 
-    case = 'actual data, seed = ' + str(seed) + ', T = ' + str(T) + ', N = ' + str(N) + ', Λ_scale = ' + str(Λ_scale) + ', cd_scale = ' + str(cd_scale)
+    case = 'actual data, seed = ' + str(seed) + ', T = ' + str(T) + ', N = ' + str(N) 
     try: 
         casedir = outputdir + case  + '/'
         os.mkdir(casedir)
