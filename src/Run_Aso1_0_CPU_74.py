@@ -16,7 +16,7 @@ if __name__ == '__main__':
     workdir = os.path.dirname(os.getcwd())
     srcdir = os.getcwd()
     datadir = workdir + '/data/'
-    outputdir = '/scratch/qhaomin/pf_mus/'
+    outputdir = '/project2/lhansen/pf_ms/'
 
     seed = 74
 
@@ -24,7 +24,7 @@ if __name__ == '__main__':
     obs_series = np.array(obs_series.iloc[:,1:]).T
 
     T = obs_series.shape[1]
-    N = 10_000
+    N = 100_000
 
     case = 'actual data, seed = ' + str(seed) + ', T = ' + str(T) + ', N = ' + str(N)
     try: 
@@ -46,9 +46,9 @@ if __name__ == '__main__':
     X_t_particle = [i[1] for i in Output_0]
     H_t_particle = [i[2] for i in Output_0]
     del(Output_0)
-    with open(casedir + 'θ_0.pkl', 'wb') as f:
-        pickle.dump(θ_t_particle, f)
-    del(θ_t_particle)
+    # with open(casedir + 'θ_0.pkl', 'wb') as f:
+    #     pickle.dump(θ_t_particle, f)
+    # del(θ_t_particle)
     # with open(casedir + 'X_0.pkl', 'wb') as f:
     #     pickle.dump(X_t_particle, f)
     # with open(casedir + 'H_0.pkl', 'wb') as f:
@@ -77,9 +77,9 @@ if __name__ == '__main__':
         H_t_next_particle = [i[2] for i in Output]
         ν_t_next_particle = [i[3] for i in Output]    
         del(Output)
-
-        with open(casedir + 'θ_' + str(t+1) + '.pkl', 'wb') as f:
-            pickle.dump(θ_t_next_particle, f)
+        if t in [49,99,149,199,249,282]:
+            with open(casedir + 'θ_' + str(t+1) + '.pkl', 'wb') as f:
+                pickle.dump(θ_t_next_particle, f)
         del(θ_t_next_particle)
         # with open(casedir + 'X_' + str(t+1) + '.pkl', 'wb') as f:
         #     pickle.dump(X_t_next_particle, f)
