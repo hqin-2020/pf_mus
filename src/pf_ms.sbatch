@@ -5,11 +5,11 @@
 #SBATCH --error=pf_ms.%A_%a.err
 #SBATCH --time=0-8:00:00
 #SBATCH --partition=broadwl
-#SBATCH --nodes=16
-#SBATCH --cpus-per-task=2
+#SBATCH --nodes=8
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=56G
 #SBATCH --array=1-150
-#SBATCH --constraint=fdr
+#SBATCH --constraint=edr
 
 module load python/anaconda-2020.02
 
