@@ -7,7 +7,7 @@
 #SBATCH --partition=broadwl
 #SBATCH --nodes=16
 #SBATCH --cpus-per-task=2
-#SBATCH --mem=60G
+#SBATCH --mem=56G
 #SBATCH --array=1-150
 #SBATCH --constraint=fdr
 
