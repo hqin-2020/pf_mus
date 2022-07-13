@@ -5,8 +5,8 @@
 #SBATCH --error=pf_ms.%A_%a.err
 #SBATCH --time=0-8:00:00
 #SBATCH --partition=broadwl
-#SBATCH --nodes=8
-#SBATCH --cpus-per-task=4
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=32
 #SBATCH --mem=56G
 #SBATCH --array=1-150
 #SBATCH --constraint=edr
