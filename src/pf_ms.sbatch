@@ -9,6 +9,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=60G
 #SBATCH --array=1-150
+#SBATCH --constraint=edr
 
 module load python/anaconda-2020.02
 
