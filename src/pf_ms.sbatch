@@ -6,7 +6,7 @@
 #SBATCH --time=0-8:00:00
 #SBATCH --partition=broadwl
 #SBATCH --nodes=1
-#SBATCH --cpus-per-task=32
+#SBATCH --cpus-per-task=28
 #SBATCH --mem=56G
 #SBATCH --array=1-150
 #SBATCH --constraint=edr
